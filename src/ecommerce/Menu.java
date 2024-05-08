@@ -85,7 +85,7 @@ public class Menu {
 				KeyPress();
 				break;
 			default: 
-				System.out.println(Cores.TEXT_WHITE_BOLD+"\nOpção Inválida!\n");
+				System.out.println(Cores.TEXT_WHITE_BOLD+"\nOpção Inválida !\n");
 				
 				KeyPress();
 				break;
