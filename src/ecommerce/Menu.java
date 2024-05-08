@@ -1,31 +1,37 @@
 package ecommerce;
 import java.util.*;
 import ecommerce.util.Cores;
-
+import ecommerce.model.*;
 import java.io.IOException;
 public class Menu {
 
 	public static void main(String[] args) {
 		
 		Scanner leia = new Scanner(System.in);
-		
 		int opcao;
-
 		
+		InstrumentoTeclas p1 = new InstrumentoTeclas("Piano", 1, "Giannine", 32000.00f, 1, "preto", 0,15);
+		InstrumentoString i1 = new InstrumentoString("Violão", 2, "Giannine", 1000.00f, 1, "azul", 20,6 ,1);
+		i1.visualizar();
+		p1.visualizar();
+		p1.sell(1);
+		p1.visualizar();
 		while(true) {
 			System.out.println(Cores.TEXT_BLUE_BRIGHT + Cores.ANSI_BLACK_BACKGROUND+"""
 				*************************************************************************
 				*                                                                       *
-				*           BANCO DO BRAZIL COM Z                                       *
+				*           STRINGS AND KEYS                                            *
 				*                                                                       *
 				*************************************************************************
 				*                                                                       *
 				*           1 - Cadastrar produto                                       *
 				*           2 - Listar Produtos                                         *
-				*           3 - Buscar Produtos por ID                                  *
-				*           4 - Atualizar Produto                                       *
-				*           5 - Apagar Produto                                          *
-				*           6 - Sair                                                    *
+				*           3 - Atualizar Produto                                       *
+				*           4 - Apagar Produto                                          *
+				*           5 - Buscar Produtos por ID                                  *
+				*           6 - Vender produto                                          *
+				*           7 - Adicionar ao estoque                                    *
+				*           8 - Sair                                                    *
 				*                                                                       *
 				*************************************************************************
 		
@@ -40,7 +46,7 @@ public class Menu {
 			}
 			
 			
-			if (opcao == 6) {
+			if (opcao == 8) {
 				System.out.println(Cores.TEXT_WHITE_BOLD+ "\nBanco do Brazil com Z - O Futuro começa aqui!");
 				sobre();
 				leia.close();
@@ -67,6 +73,14 @@ public class Menu {
 				KeyPress();
 				break;
 			case 5:
+				
+				KeyPress();
+				break;
+			case 6:
+				
+				KeyPress();
+				break;
+			case 7:
 				
 				KeyPress();
 				break;
