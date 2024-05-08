@@ -8,10 +8,12 @@ public interface LojaRepository {
 	public void procurarPorID(int id);
 	public void listarInstrumentos();
 	public void cadastrarInstrumento(Instrumento instrumento);
-	public void AtualizarInstrumento(Instrumento instrumento);
-	public void Deletar(int id);
+	public void atualizarInstrumento(Instrumento instrumento);
+	public void deletar(int id);
 	
 	//Metodos Atualização de produtos 
 	public void sell (int id, int quantidade);
 	public void buy (int id, int quantidade);
+
+
 }

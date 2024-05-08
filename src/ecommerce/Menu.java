@@ -1,6 +1,7 @@
 package ecommerce;
 import java.util.*;
 import ecommerce.util.Cores;
+import ecommerce.controller.LojaController;
 import ecommerce.model.*;
 import java.io.IOException;
 public class Menu {
@@ -8,14 +9,12 @@ public class Menu {
 	public static void main(String[] args) {
 		
 		Scanner leia = new Scanner(System.in);
-		int opcao;
+		LojaController instrumentos = new LojaController();
+		int opcao,id,quantidade ,tipo, estoque, qntCordas, qntTeclas, modelo, numero;
+		String nome, marca, cor;
+		float preco;
 		
-		InstrumentoTeclas p1 = new InstrumentoTeclas("Piano", 1, "Giannine", 32000.00f, 1, "preto", 0,15);
-		InstrumentoString i1 = new InstrumentoString("Violão", 2, "Giannine", 1000.00f, 1, "azul", 20,6 ,1);
-		i1.visualizar();
-		p1.visualizar();
-		p1.sell(1);
-		p1.visualizar();
+		
 		while(true) {
 			System.out.println(Cores.TEXT_BLUE_BRIGHT + Cores.ANSI_BLACK_BACKGROUND+"""
 				*************************************************************************
@@ -26,12 +25,10 @@ public class Menu {
 				*                                                                       *
 				*           1 - Cadastrar produto                                       *
 				*           2 - Listar Produtos                                         *
-				*           3 - Atualizar Produto                                       *
-				*           4 - Apagar Produto                                          *
-				*           5 - Buscar Produtos por ID                                  *
-				*           6 - Vender produto                                          *
-				*           7 - Adicionar ao estoque                                    *
-				*           8 - Sair                                                    *
+				*           3 - Apagar Produto                                          *
+				*           4 - Vender produto                                          *
+				*           5 - Adicionar ao estoque                                    *
+				*           6 - Sair                                                    *
 				*                                                                       *
 				*************************************************************************
 		
@@ -46,49 +43,120 @@ public class Menu {
 			}
 			
 			
-			if (opcao == 8) {
-				System.out.println(Cores.TEXT_WHITE_BOLD+ "\nBanco do Brazil com Z - O Futuro começa aqui!");
+			if (opcao == 6) {
+				System.out.println(Cores.TEXT_WHITE_BOLD+ "\nSTRINGS AND KEYS - Loja de Instrumentos!");
 				sobre();
 				leia.close();
 				System.exit(0);
 			}
 			
 			switch(opcao) {
-			case 1:
+			case 1 -> {
+				System.out.println("Dgite o nome do instrumento: ");
+				nome = leia.next();
+				System.out.println("Digite a marca do instrumento: ");
+				marca = leia.next();
+				System.out.println("Digite o preço do instrumento: ");
+				preco = leia.nextFloat();
+				System.out.println("Digite a cor do instrumento: ");
+				cor = leia.next();
+				System.out.println("Digite a quantidade de instrumentos: ");
+				estoque = leia.nextInt();
+				System.out.print("""
+						-Tipo de Instrumento-
+						
+						1 - Instrumeto do corda
+						2 - Instrumento de teclas
+						>
+						""");
+				do {
+					tipo = leia.nextInt();
+					if(tipo != 1 && tipo != 2) {
+						System.out.println("digite um tipo válido!!");
+					}
+				}while(tipo == 1 && tipo == 2);
 				
+				switch(tipo) {
+				case 1->{ 
+					System.out.println("Digite a quantidade de cordas do instrumento: ");
+					qntCordas = leia.nextInt();
+					
+					System.out.print("""
+							-Modelo-
+							1 - Acoustic
+							2 - Eletric
+							>
+							""");
+					do {
+						modelo = leia.nextInt();
+						if(modelo != 1 && modelo != 2) {
+							System.out.println("digite um tipo válido!!");
+						}
+					}while(modelo == 1 && modelo == 2);
+					
+					instrumentos.cadastrarInstrumento(new InstrumentoString(nome, instrumentos.gerarId(), marca, preco, tipo,cor, estoque,qntCordas, modelo));
+					
+					break;
+				}
+				case 2 ->{
+					System.out.println("Digite a quantidade de teclas do instrumento: ");
+					qntTeclas = leia.nextInt();
+					instrumentos.cadastrarInstrumento(new InstrumentoTeclas(nome, instrumentos.gerarId(), marca, preco, tipo,cor, estoque,qntTeclas));
+					break;
+				}
+				}
 				
 				KeyPress();
 				break;
-			case 2: 
+			}
+			case 2 ->{ 
+				System.out.println("Lista de Instrumentos Cadastrados: ");
+				
+				instrumentos.listarInstrumentos();
+				KeyPress();
+				break;
+			}
+			case 3 ->{
+				System.out.println("Digite o ID do produto que deseja deletar do sistema: ");
+				numero = leia.nextInt();
+				instrumentos.deletar(numero);
 				
 				KeyPress();
 				break;
-			case 3: 
+			}
+			case 4 -> {
+				System.out.println("Código do produto a ser vendido: ");
+				id = leia.nextInt();
 				
-				
-				KeyPress();
-				break;
-			case 4:
-				
-				KeyPress();
-				break;
-			case 5:
-				
-				KeyPress();
-				break;
-			case 6:
+				do {
+					System.out.println("Digite a quantidade: ");
+					quantidade  = leia.nextInt();
+				}while(quantidade <= 0);
+				instrumentos.sell(id, quantidade);
 				
 				KeyPress();
 				break;
-			case 7:
+			}
+			case 5->{
+				System.out.println("ID do produto a adicionar estoque: ");
+				id = leia.nextInt();
+				
+				do {
+					System.out.println("Digite a quantidade que será adicionada: ");
+					quantidade  = leia.nextInt();
+				}while(quantidade <= 0);
+				instrumentos.buy(id, quantidade);
 				
 				KeyPress();
 				break;
-			default: 
+			}
+			
+			default->{
 				System.out.println(Cores.TEXT_WHITE_BOLD+"\nOpção Inválida !\n");
 				
 				KeyPress();
 				break;
+			}
 			}
 		
 		}
